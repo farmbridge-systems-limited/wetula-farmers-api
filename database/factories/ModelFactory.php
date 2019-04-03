@@ -21,7 +21,7 @@ $factory->define(App\Models\FarmerInfo::class, function (Faker\Generator $faker)
         'first_name' => $faker->firstName,
         'middle_name' => strtoupper($faker->randomLetter),
         'nickname' => $faker->userName,
-        'sex' => $faker->randomElement(['Male', 'Female']),
+        'sex' => $faker->randomElement(['male', 'female']),
         'date_of_birth' => $faker->date(),
         'id_type' => 'Voters',
         'id_number' => $faker->creditCardNumber,
@@ -33,7 +33,7 @@ $factory->define(App\Models\FarmerInfo::class, function (Faker\Generator $faker)
         'postal_town_village_settlement' => $faker->streetName,
         'postal_street_road_trace_sentence' => $faker->streetAddress,
         'district_province' => $faker->city,
-        'region' => $faker->randomElement(['Ashanti', 'Greater', 'Volta']),
+        'region' => $faker->randomElement(['ashanti', 'greater', 'volta']),
         'country' => $faker->country,
         'is_absentee_farmer' => $faker->boolean,
         'is_verified' => $faker->boolean,
@@ -50,7 +50,7 @@ $factory->define(App\Models\FarmerEnterprise::class, function (Faker\Generator $
     return [
         'farmer_info_id' => $faker->numberBetween(1,50),
         'enterprise_id' => $faker->numberBetween(1,30),
-        'engagement_status' => $faker->randomElement(['Major', 'Minor'])
+        'engagement_status' => $faker->randomElement(['major', 'minor'])
     ];
 });
 
@@ -64,7 +64,7 @@ $factory->define(App\Models\Land::class, function (Faker\Generator $faker) {
         'address' => $faker->address,
         'size_area' => $faker->randomElement(['100x100', '500x500', '750x750']),
         'gps_address' => $faker->randomElement(['AS152541', 'BR241515', 'GT871524']),
-        'region' => $faker->randomElement(['Ashanti', 'Volta', 'Brong-Ahafo', 'Central']),
+        'region' => $faker->randomElement(['ashanti', 'volta', 'Brong-Ahafo', 'Central']),
         'district' => $faker->randomElement(['Ejura-Sekyedumase', 'Offinso West', 'Ashaiman North']),
         'locality' => $faker->randomElement(['Kyenkyenkura', 'Babaso', 'Nokwaresa']),
 //        'applicable_tenure_code' => $faker->randomElement(['state rented', 'state leased',
@@ -83,7 +83,7 @@ $factory->define(App\Models\Land::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\LandDocument::class, function (Faker\Generator $faker) {
     return [
         'land_id' => $faker->numberBetween(1,500),
-        'document_type' => $faker->randomElement(['Lease', 'Deed','Agreement', 'Rent Receipt', 'Affidavit']),
+        'document_type' => $faker->randomElement(['lease', 'deed', 'agreement', 'rent Receipt', 'affidavit']),
         'document_url' => $faker->imageUrl()
     ];
 });

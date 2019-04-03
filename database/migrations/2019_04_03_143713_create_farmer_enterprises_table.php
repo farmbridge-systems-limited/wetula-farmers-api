@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateFarmerEnterprisesTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateFarmerEnterprisesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('farmer_info_id')->unsigned();
             $table->integer('enterprise_id')->unsigned();
-            $table->enum('engagement_status', ['Major', 'Minor']);
+            $table->enum('engagement_status', ['major', 'minor']);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateFarmersInfosTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateFarmersInfosTable extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('nickname')->nullable();
-            $table->enum('sex', ['Male', 'Female']);
+            $table->enum('sex', ['male', 'female']);
             $table->date('date_of_birth');
             $table->string('id_type');
             $table->string('id_number');

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateLandDocumentsTable extends Migration
 {
@@ -16,7 +16,7 @@ class CreateLandDocumentsTable extends Migration
         Schema::create('land_documents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('land_id');
-            $table->enum('document_type',['Lease', 'Deed','Agreement', 'Rent Receipt', 'Affidavit']);
+            $table->enum('document_type', ['lease', 'deed', 'agreement', 'rent receipt', 'affidavit']);
             $table->string('document_url');
             $table->timestamps();
             $table->softDeletes();
