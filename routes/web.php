@@ -11,6 +11,10 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
+$router->get('/farmers', 'FarmerInfoController@index');
+$router->post('/farmers', 'FarmerInfoController@store');
+$router->get('/farmers/$id', 'FarmerInfoController@show');
+$router->put('/farmers/$id', 'FarmerInfoController@update');
+$router->patch('/farmers/$id', 'FarmerInfoController@update');
+$router->delete('/farmers/$id', 'FarmerInfoController@destroy');
+
