@@ -18,9 +18,15 @@ $router->put('/test/{farmer_info)', 'FarmerInfoController@update'); //TODO: Curr
 $router->patch('/farmers/{farmer_info}', 'FarmerInfoController@update');
 $router->delete('/farmers/{farmer_info}', 'FarmerInfoController@destroy');
 
+
 $router->patch('/farmers/{farmer_info}/bank-info', 'BankInfoController@update');
+$router->delete('/farmers/bank-info{bank_info}', 'BankInfoController@destroy');
+
 $router->patch('/farmers/{farmer_info}/land/{land}', 'LandController@update');
+$router->delete('/farmers/lands{land}', 'LandController@destroy');
+
 $router->patch('/farmers/lands/{land}/document/{document}', 'LandDocumentsController@update');
+$router->delete('/farmers/documents/{document}', 'LandController@destroy');
 
 
 

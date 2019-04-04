@@ -46,4 +46,14 @@ class LandDocumentsController extends Controller
 
         return $this->successResponse($document);
     }
+
+    public function destroy($document_id)
+    {
+        $document = LandDocument::where('id', $document_id)->first();
+        if (empty($document)) {
+            return $this->errorResponse('Document not found', Response::HTTP_NOT_FOUND);
+        }
+        $document->delete();
+        return $this->successResponse($document);
+    }
 }

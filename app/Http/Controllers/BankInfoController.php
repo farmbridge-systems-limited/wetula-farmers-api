@@ -49,4 +49,16 @@ class BankInfoController extends Controller
 
         return $this->successResponse($bankInfo);
     }
+
+    public function destroy($bank_info_id)
+    {
+        $bankInfo = BankInfo::where('farmer_info_id', $bank_info_id)->first();
+
+        if (empty($bankInfo)) {
+            return $this->errorResponse('Bank Info not found', Response::HTTP_NOT_FOUND);
+        }
+
+        $bankInfo->delete();
+        return $this->successResponse($bankInfo);
+    }
 }
