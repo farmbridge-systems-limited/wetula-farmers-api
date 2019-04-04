@@ -248,7 +248,6 @@ class FarmerInfoController extends Controller
             'applicant_signage_url' => '',
         ];
 
-        //TODO: Create controller action to update bank information
         //TODO: Create controller action to update a land
         //TODO: Create controller action to update a document
         //TODO: Create controller action to update a farmer_enterprises
