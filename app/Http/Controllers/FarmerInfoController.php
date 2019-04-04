@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\FarmerInfo;
 use App\traits\ApiResponser;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class FarmerInfoController extends Controller
 {
@@ -25,7 +27,9 @@ class FarmerInfoController extends Controller
     public function index()
     {
         //TODO: chunk records for faster loads
-        $farmers = FarmerInfo::with('enterprises', 'lands.documents', 'bankInfo')->get();
+        $farmers = FarmerInfo::with('enterprises', 'lands.documents', 'bankInfo')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
         return $this->successResponse($farmers);
     }
 
@@ -37,38 +41,42 @@ class FarmerInfoController extends Controller
      */
     public function store(Request $request)
     {
+        $min_date_of_birth = Carbon::today()->addYears(-18);
+
         $rules = [
-            'user_id' => 'required|numeric',
+            'user_id' => 'required|numeric|unique:farmer_info',
             'surname' => 'required|max:250',
-            'first_name' => 'required|max:250',
-            'middle_name' => 'required|max:250',
-            'nickname' => 'required|max:250',
-            'sex' => 'required|in:male,female',
-            'date_of_birth' => 'required',
-            'id_type' => 'required',
-            'id_number' => 'required',
+            'first_name' => 'required|alpha|max:250',
+            'middle_name' => 'required|alpha|max:250',
+            'nickname' => 'string|max:250',
+            'sex' => 'required|alpha|in:male,female',
+            'date_of_birth' => 'required|date|before:' . $min_date_of_birth->toDateString(), //TODO:: return appropriate error messaging telling the user he/she is not 18 years and not eligible.
+            'id_type' => 'required|alpha',
+            'id_number' => 'required|numeric',
             'town_village_settlement' => 'required',
             'road_street_trace_address' => 'required',
             'house_number' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|max:255|unique:farmer_info',
             'postal_office_box' => 'required',
             'postal_town_village_settlement' => 'required',
             'postal_street_road_trace_sentence' => 'required',
             'district_province' => 'required',
-            'region' => 'required',
-            'country' => 'required',
-            'is_absentee_farmer' => 'required',
-            'is_verified' => 'required',
-            'date_verified' => 'required',
+            'region' => 'required|alpha',
+            'country' => 'required|alpha',
+            'is_absentee_farmer' => 'required|boolean',
+            'is_verified' => 'required|boolean',
+            'date_verified' => 'required|date',
             'photograph_url' => '',
             'applicant_signage_url' => '',
         ];
 
         $this->validate($request, $rules);
 
-        $farmerInfo = FarmerInfo::create($request->all());
+        DB::transaction(static function () use ($request) {
+            $farmerInfo = FarmerInfo::create($request->all());
+        });
 
-        return $this->successResponse($farmerInfo, Response::HTTP_CREATED);
+        return $this->errorResponse('Could not store new farmer', Response::HTTP_CREATED);
 
     }
 
