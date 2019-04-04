@@ -13,7 +13,7 @@
 
 $router->get('/farmers', 'FarmerInfoController@index');
 $router->post('/farmers', 'FarmerInfoController@store');
-$router->get('/farmers/$id', 'FarmerInfoController@show');
+$router->get('/farmers/{farmer_info}', 'FarmerInfoController@show');
 $router->put('/farmers/$id', 'FarmerInfoController@update');
 $router->patch('/farmers/$id', 'FarmerInfoController@update');
 $router->delete('/farmers/$id', 'FarmerInfoController@destroy');

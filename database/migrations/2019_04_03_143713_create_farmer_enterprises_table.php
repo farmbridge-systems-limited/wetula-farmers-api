@@ -16,7 +16,7 @@ class CreateFarmerEnterprisesTable extends Migration
         Schema::create('farmer_enterprises', function (Blueprint $table) {
             $table->bigIncrements('id');
 //            $table->bigInteger('farmer_info_id')->unsigned();
-            $table->integer('enterprise_id')->unsigned();
+            $table->bigInteger('enterprise_id')->unsigned();
             $table->enum('engagement_status', ['major', 'minor']);
             $table->timestamps();
             $table->softDeletes();
