@@ -12,7 +12,7 @@ class FarmerInfo extends Model
     protected $table = 'farmer_info';
 
     protected $fillable = [
-        'user_id',
+
         'surname',
         'first_name',
         'middle_name',
@@ -38,6 +38,7 @@ class FarmerInfo extends Model
     ];
 
     protected $guarded = [
+        'user_id',
         'is_verified',
     ];
 

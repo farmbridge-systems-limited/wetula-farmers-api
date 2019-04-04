@@ -14,7 +14,11 @@
 $router->get('/farmers', 'FarmerInfoController@index');
 $router->post('/farmers', 'FarmerInfoController@store');
 $router->get('/farmers/{farmer_info}', 'FarmerInfoController@show');
-$router->put('/farmers/$id', 'FarmerInfoController@update');
-$router->patch('/farmers/$id', 'FarmerInfoController@update');
-$router->delete('/farmers/$id', 'FarmerInfoController@destroy');
+$router->put('/test/{farmer_info)', 'FarmerInfoController@update'); //TODO: Currently not working
+$router->patch('/farmers/{farmer_info}', 'FarmerInfoController@update');
+$router->delete('/farmers/{farmer_info}', 'FarmerInfoController@destroy');
+
+$router->patch('/farmers/{farmer_info}/bank-info', 'BankInfoController@update');
+
+
 

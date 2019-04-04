@@ -186,8 +186,8 @@ class FarmerInfoController extends Controller
         DB::commit();
 
         $response = FarmerInfo::with('enterprises', 'lands.documents', 'bankInfo')->
-        where('id', $farmer->id)->get();
-        return $this->successResponse($farmer, Response::HTTP_CREATED);
+        where('id', $farmer->id)->first();
+        return $this->successResponse($response, Response::HTTP_CREATED);
 
     }
 
@@ -199,20 +199,80 @@ class FarmerInfoController extends Controller
     public function show($farmer_info): JsonResponse
     {
         $farmer = FarmerInfo::with('enterprises', 'lands.documents', 'bankInfo')->
-        where('id', $farmer_info)->get();
+        where('id', $farmer_info)->first();
+        if (empty($farmer)) {
+            return $this->errorResponse('Farmer Info with Specified ID does not exit', Response::HTTP_NOT_FOUND);
+        }
         return $this->successResponse($farmer, Response::HTTP_OK);
     }
 
 
     /**
-     * Updates an existing @see FarmerInfo
+     * Updates an existing @see FarmerInfo data only.
+     * Update for remaining entities will be in done their specific
+     * controllers targeting those entities only.
      * @param Request $request
-     * @param $farmer_info
+     * @param $farmer_info_id
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, $farmer_info): JsonResponse
+    public function update(Request $request, $farmer_info_id): JsonResponse
     {
-        return response()->json([]);
+        $min_date_of_birth = Carbon::today()->addYears(-18);
+
+        $rules = [
+            'user_id' => 'numeric',
+            'surname' => 'max:250',
+            'first_name' => 'alpha|max:250',
+            'middle_name' => 'alpha|max:250',
+            'nickname' => 'string|max:250',
+            'sex' => 'alpha|in:male,female',
+            'date_of_birth' => 'date|before:' . $min_date_of_birth->toDateString(),
+            //TODO:: return appropriate error messaging telling the user he/she is not 18 years and not eligible instead of the current default error message.
+            'id_type' => 'alpha',
+            'id_number' => 'numeric',
+            'town_village_settlement' => '',
+            'road_street_trace_address' => '',
+            'house_number' => '',
+            'email' => 'email|max:255',
+            'postal_office_box' => '',
+            'postal_town_village_settlement' => '',
+            'postal_street_road_trace_sentence' => '',
+            'district_province' => '',
+            'region' => 'alpha',
+            'country' => 'alpha',
+            'is_absentee_farmer' => 'boolean',
+            'is_verified' => 'boolean',
+            'date_verified' => 'date',
+            'photograph_url' => '',
+            'applicant_signage_url' => '',
+        ];
+
+        //TODO: Create controller action to update bank information
+        //TODO: Create controller action to update a land
+        //TODO: Create controller action to update a document
+        //TODO: Create controller action to update a farmer_enterprises
+
+        $this->validate($request, $rules);
+
+        /**
+         * NOTES
+         * user_id of the @see FarmerInfo is guarded. That means will not change with the fill method.
+         * If at any point we change the fill method below we should make not enact changes to user_id property.
+         */
+
+        $farmer_info = FarmerInfo::where('id', $farmer_info_id)->first();
+        if (empty($farmer_info)) {
+            return $this->errorResponse('Farmer info with specified ID does not exit', Response::HTTP_NOT_FOUND);
+        }
+        $farmer_info->fill($request->all());
+
+        if ($farmer_info->isClean()) {
+            return $this->errorResponse('At least one value must change.',
+                Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return $this->successResponse($farmer_info);
     }
 
     /**
