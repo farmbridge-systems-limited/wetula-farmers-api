@@ -15,7 +15,7 @@ class UpdateFarmerEnterprisesTable extends Migration
     {
         Schema::table('farmer_enterprises', function (Blueprint $table) {
             $table->bigInteger('farmer_info_id')->unsigned();
-            $table->foreign('farmer_info_id')->references('id')->on('farmer_info');
+            $table->foreign('farmer_info_id')->references('id')->on('farmer_info')->onDelete('cascade');
         });
     }
 

@@ -281,9 +281,15 @@ class FarmerInfoController extends Controller
      * @param $farmer_info
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($farmer_info): JsonResponse
+    public function destroy($farmer_info_id): JsonResponse
     {
-        return response()->json([]);
+        $farmer_info = FarmerInfo::where('id', $farmer_info_id)->first();
+        if (empty($farmer_info)) {
+            return $this->errorResponse('Farmer info with not found', Response::HTTP_NOT_FOUND);
+        }
+
+        $farmer_info->delete();
+        return $this->successResponse($farmer_info);
     }
 
 
