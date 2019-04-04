@@ -11,20 +11,23 @@
 |
 */
 
+// FARMERS
 $router->get('/farmers', 'FarmerInfoController@index');
 $router->post('/farmers', 'FarmerInfoController@store');
 $router->get('/farmers/{farmer_info}', 'FarmerInfoController@show');
-$router->put('/test/{farmer_info)', 'FarmerInfoController@update'); //TODO: Currently not working
+$router->put('/farmers/{farmer_info)', 'FarmerInfoController@update'); //TODO: Currently not working
 $router->patch('/farmers/{farmer_info}', 'FarmerInfoController@update');
 $router->delete('/farmers/{farmer_info}', 'FarmerInfoController@destroy');
 
-
+// BANK INFORMATION
 $router->patch('/farmers/{farmer_info}/bank-info', 'BankInfoController@update');
 $router->delete('/farmers/bank-info{bank_info}', 'BankInfoController@destroy');
 
+// LANDs
 $router->patch('/farmers/{farmer_info}/land/{land}', 'LandController@update');
 $router->delete('/farmers/lands{land}', 'LandController@destroy');
 
+// LAND DOCUMENTS
 $router->patch('/farmers/lands/{land}/document/{document}', 'LandDocumentsController@update');
 $router->delete('/farmers/documents/{document}', 'LandController@destroy');
 
