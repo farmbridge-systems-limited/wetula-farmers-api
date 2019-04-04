@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBankInfoTable extends Migration
 {
@@ -13,7 +13,7 @@ class CreateBankInfoTable extends Migration
      */
     public function up()
     {
-        Schema::create('bank_infos', function (Blueprint $table) {
+        Schema::create('bank_info', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('farmer_info_id');
             $table->string('account_type');

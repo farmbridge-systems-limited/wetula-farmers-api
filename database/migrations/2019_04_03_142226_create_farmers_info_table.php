@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFarmersInfosTable extends Migration
+class CreateFarmersInfoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFarmersInfosTable extends Migration
      */
     public function up()
     {
-        Schema::create('farmer_infos', function (Blueprint $table) {
+        Schema::create('farmer_info', function (Blueprint $table) {
             $table->bigIncrements('id'); // Table ID for FarmersApi Service
             $table->unsignedInteger('user_id')->unique(); // Primary User Identifier from Api Gateway
             $table->string('surname');

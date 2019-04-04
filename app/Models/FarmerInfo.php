@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class FarmerInfo extends Model
 {
+    protected $table = 'farmer_info';
 
     protected $fillable = [
         'user_id',
@@ -36,5 +39,32 @@ class FarmerInfo extends Model
     protected $guarded = [
         'is_verified',
     ];
+
+    /**
+     * Fetches related farmer enterprises
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function enterprises(): HasMany
+    {
+        return $this->hasMany(FarmerEnterprise::class);
+    }
+
+    /**
+     * Fetches all lands that belongs to this farmer
+     * @return HasMany
+     */
+    public function lands(): HasMany
+    {
+        return $this->hasMany(Land::class);
+    }
+
+    /**
+     * Fetches the farmers bank information
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function bankInfo(): HasOne
+    {
+        return $this->hasOne(BankInfo::class);
+    }
 
 }

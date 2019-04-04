@@ -6,6 +6,7 @@ use App\Models\FarmerInfo;
 use App\traits\ApiResponser;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class FarmerInfoController extends Controller
 {
@@ -23,7 +24,8 @@ class FarmerInfoController extends Controller
      */
     public function index()
     {
-        $farmers = FarmerInfo::all();
+        //TODO: chunk records for faster loads
+        $farmers = FarmerInfo::with('enterprises', 'lands.documents', 'bankInfo')->get();
         return $this->successResponse($farmers);
     }
 
@@ -58,16 +60,15 @@ class FarmerInfoController extends Controller
             'is_absentee_farmer' => 'required',
             'is_verified' => 'required',
             'date_verified' => 'required',
-//            'photograph_url' => '',
-//            'applicant_signage_url' => ''
+            'photograph_url' => '',
+            'applicant_signage_url' => '',
         ];
-
 
         $this->validate($request, $rules);
 
         $farmerInfo = FarmerInfo::create($request->all());
 
-        return $this->successResponse($farmerInfo);
+        return $this->successResponse($farmerInfo, Response::HTTP_CREATED);
 
     }
 

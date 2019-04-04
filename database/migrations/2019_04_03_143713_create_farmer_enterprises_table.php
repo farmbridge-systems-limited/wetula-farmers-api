@@ -15,7 +15,7 @@ class CreateFarmerEnterprisesTable extends Migration
     {
         Schema::create('farmer_enterprises', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('farmer_info_id')->unsigned();
+//            $table->bigInteger('farmer_info_id')->unsigned();
             $table->integer('enterprise_id')->unsigned();
             $table->enum('engagement_status', ['major', 'minor']);
             $table->timestamps();
@@ -30,6 +30,6 @@ class CreateFarmerEnterprisesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enterprises');
+        Schema::dropIfExists('farmer_enterprises');
     }
 }
