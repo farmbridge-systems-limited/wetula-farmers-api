@@ -14,6 +14,7 @@ class LandDocument extends Model
         'document_url',
     ];
 
+
     /**
      * Fetches the related farmer land
      * @return BelongsTo

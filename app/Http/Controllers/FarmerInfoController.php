@@ -271,6 +271,8 @@ class FarmerInfoController extends Controller
                 Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $farmer_info->save();
+
         return $this->successResponse($farmer_info);
     }
 

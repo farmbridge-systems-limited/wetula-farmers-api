@@ -10,8 +10,7 @@ class Land extends Model
 {
 
     protected $fillable = [
-        'farmer_info_id',
-        'verification_officer_id',
+
         'address',
         'size_area',
         'gps_address',
@@ -23,6 +22,8 @@ class Land extends Model
     ];
 
     protected $guarded = [
+        'farmer_info_id',
+        'verification_officer_id',
         'is_tenureship_verified',
         'are_documents_verified'
     ];

@@ -45,6 +45,7 @@ class BankInfoController extends Controller
             return $this->errorResponse('At least one value must change.',
                 Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+        $bankInfo->save();
 
         return $this->successResponse($bankInfo);
     }

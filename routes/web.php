@@ -20,6 +20,7 @@ $router->delete('/farmers/{farmer_info}', 'FarmerInfoController@destroy');
 
 $router->patch('/farmers/{farmer_info}/bank-info', 'BankInfoController@update');
 $router->patch('/farmers/{farmer_info}/land/{land}', 'LandController@update');
+$router->patch('/farmers/lands/{land}/document/{document}', 'LandDocumentsController@update');
 
 
 

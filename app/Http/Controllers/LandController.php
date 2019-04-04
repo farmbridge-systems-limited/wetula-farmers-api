@@ -21,7 +21,6 @@ class LandController extends Controller
     public function update(Request $request, $farmer_info_id, $land_id)
     {
         $rules = [
-            'farmer_info_id' => 'required|numeric',
             'verification_officer_id' => '',
             'address' => 'string',
             'size_area' => 'string',
@@ -36,6 +35,13 @@ class LandController extends Controller
 
         $this->validate($request, $rules);
 
+        if ($request->has('verification_office_id')) {
+            $this->validate($request, [
+                'verification_officer_id' => 'numeric'
+            ]);
+
+        }
+
         $land = Land::where('id', $land_id)
             ->where('farmer_info_id', $farmer_info_id)->first();
 
@@ -44,13 +50,16 @@ class LandController extends Controller
         }
 
         $land->fill($request->all());
+
+
+        $land->farmer_info_id = $farmer_info_id;
         $land->is_tenureship_verified = $request->get('is_tenureship_verified');
         $land->are_documents_verified = $request->get('are_documents_verified');
-
-        if ($land->isClean()) {
-            return $this->errorResponse('At least one value must change.',
-                Response::HTTP_UNPROCESSABLE_ENTITY);
+        if ($request->has('verification_officer_id')) {
+            $land->verification_officer_id = $request->get('verification_officer_id');
         }
+
+        $land->save();
 
         return $this->successResponse($land);
     }
