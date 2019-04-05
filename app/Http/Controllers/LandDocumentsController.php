@@ -11,12 +11,19 @@ namespace App\Http\Controllers;
 
 use App\Models\LandDocument;
 use App\traits\ApiResponser;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class LandDocumentsController extends Controller
 {
     use ApiResponser;
+
+    public function show($farmer_info_id, $document_id): JsonResponse
+    {
+        $document = LandDocument::findOrFail($document_id);
+        return $this->successResponse($document, Response::HTTP_OK);
+    }
 
     public function update(Request $request, $land_id, $document_id)
     {
