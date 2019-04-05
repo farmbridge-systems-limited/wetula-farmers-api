@@ -256,10 +256,7 @@ class FarmerInfoController extends Controller
          * If at any point we change the fill method below we should make not enact changes to user_id property.
          */
 
-        $farmer_info = FarmerInfo::where('id', $farmer_info_id)->first();
-        if (empty($farmer_info)) {
-            return $this->errorResponse('Farmer info with specified ID does not exit', Response::HTTP_NOT_FOUND);
-        }
+        $farmer_info = FarmerInfo::findOrFail($farmer_info_id);
         $farmer_info->fill($request->all());
 
         if ($farmer_info->isClean()) {
@@ -279,11 +276,7 @@ class FarmerInfoController extends Controller
      */
     public function destroy($farmer_info_id): JsonResponse
     {
-        $farmer_info = FarmerInfo::where('id', $farmer_info_id)->first();
-        if (empty($farmer_info)) {
-            return $this->errorResponse('Farmer info with not found', Response::HTTP_NOT_FOUND);
-        }
-
+        $farmer_info = FarmerInfo::findOrFail($farmer_info_id);
         $farmer_info->delete();
         return $this->successResponse($farmer_info);
     }

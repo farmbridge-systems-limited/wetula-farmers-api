@@ -66,12 +66,7 @@ class LandController extends Controller
 
     public function destroy($land_id)
     {
-        $land = Land::where('id', $land_id)->first();
-
-        if (empty($land)) {
-            return $this->errorResponse('Land Parcel not found', Response::HTTP_NOT_FOUND);
-        }
-
+        $land = Land::findOrFail($land_id);
         $land->delete();
         return $this->successResponse($land);
     }
